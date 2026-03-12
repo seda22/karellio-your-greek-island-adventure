@@ -293,4 +293,11 @@ export const translations = {
   },
 } as const;
 
-export type Translations = typeof translations.en;
+// Use a generic shape so both languages match the same type
+type DeepStringify<T> = T extends readonly (infer U)[]
+  ? DeepStringify<U>[]
+  : T extends object
+  ? { [K in keyof T]: DeepStringify<T[K]> }
+  : string;
+
+export type Translations = DeepStringify<typeof translations.en>;
