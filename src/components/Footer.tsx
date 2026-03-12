@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import logoImg from "@/assets/karellio-logo.png";
+import KarellioLogo from "@/components/KarellioLogo";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -22,9 +22,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2.5 font-display text-xl font-bold mb-4">
-              <img src={logoImg} alt="Karellio" className="h-9 w-auto" />
-              Karellio
+            <div className="flex items-center gap-3 font-display text-xl font-bold mb-4">
+              <KarellioLogo size="sm" />
+              <span className="uppercase tracking-[0.15em]">Karellio</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">{t.footer.tagline}</p>
           </div>
