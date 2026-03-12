@@ -4,22 +4,22 @@ import { Clock, Tag } from "lucide-react";
 const Blog = () => {
   return (
     <div>
-      <section className="py-16 bg-sand/50">
+      <section className="py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-3">Travel Blog</h1>
+          <h1 className="font-display text-4xl md:text-5xl font-bold mb-3">Travel Guides</h1>
           <p className="text-muted-foreground max-w-lg mx-auto">
             Expert guides, travel tips, and inspiration for your Greek island adventures.
           </p>
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
-          <div className="space-y-8">
+          <div className="space-y-6">
             {blogPosts.map((post) => (
               <article
                 key={post.id}
-                className="rounded-xl border border-border bg-card p-6 hover:shadow-lg transition-shadow"
+                className="rounded-xl border border-border bg-card p-6 hover:border-primary/30 transition-colors"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">

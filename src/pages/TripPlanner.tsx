@@ -55,7 +55,7 @@ const TripPlanner = () => {
 
   return (
     <div>
-      <section className="py-16 bg-sand/50">
+      <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-3">Trip Planner</h1>
           <p className="text-muted-foreground max-w-lg mx-auto">
@@ -64,18 +64,18 @@ const TripPlanner = () => {
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
           {/* Add destination */}
           <div className="rounded-xl border border-border bg-card p-6 mb-10">
             <h2 className="font-display text-lg font-semibold mb-4 flex items-center gap-2">
               <MapPin className="h-5 w-5 text-primary" /> Add a Destination
             </h2>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <select
                 value={selectedIsland}
                 onChange={(e) => setSelectedIsland(e.target.value)}
-                className="flex-1 rounded-lg border border-input bg-background px-3 py-2.5 text-sm font-body focus:outline-none focus:ring-2 focus:ring-ring"
+                className="flex-1 rounded-lg border border-input bg-muted px-3 py-2.5 text-sm font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               >
                 <option value="">Select an island...</option>
                 {islands
@@ -87,7 +87,7 @@ const TripPlanner = () => {
               <button
                 onClick={addDestination}
                 disabled={!selectedIsland}
-                className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
+                className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1"
               >
                 <Plus className="h-4 w-4" /> Add
               </button>
@@ -109,9 +109,9 @@ const TripPlanner = () => {
                   <div key={dest.islandId} className="rounded-xl border border-border bg-card overflow-hidden">
                     <div className="relative h-40 overflow-hidden">
                       <img src={island.image} alt={island.name} className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                       <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-                        <h3 className="font-display text-2xl font-bold text-primary-foreground">{island.name}</h3>
+                        <h3 className="font-display text-2xl font-bold text-foreground">{island.name}</h3>
                         <button
                           onClick={() => removeDestination(dest.islandId)}
                           className="rounded-lg bg-destructive/80 p-2 text-destructive-foreground hover:bg-destructive transition-colors"
