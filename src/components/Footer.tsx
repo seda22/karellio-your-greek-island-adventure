@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import logoImg from "@/assets/karellio-logo.png";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -22,9 +23,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2.5 font-display text-xl font-bold mb-4">
-              <span className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold glow-box">
-                K
-              </span>
+              <img src={logoImg} alt="Karellio" className="h-9 w-auto" />
               Karellio
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">{t.footer.tagline}</p>

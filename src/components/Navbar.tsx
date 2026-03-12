@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Globe } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import logoImg from "@/assets/karellio-logo.png";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -21,9 +22,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <Link to="/" className="flex items-center gap-2.5 font-display text-xl font-bold text-foreground">
-          <span className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold glow-box">
-            K
-          </span>
+          <img src={logoImg} alt="Karellio" className="h-9 w-auto" />
           Karellio
         </Link>
 
