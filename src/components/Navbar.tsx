@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/destinations", label: "Destinations" },
-  { to: "/planner", label: "Trip Planner" },
-  { to: "/blog", label: "Travel Guides" },
-];
+import { Menu, X, Globe } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { lang, setLang, t } = useLanguage();
+
+  const navLinks = [
+    { to: "/", label: t.nav.home },
+    { to: "/destinations", label: t.nav.destinations },
+    { to: "/planner", label: t.nav.tripPlanner },
+    { to: "/blog", label: t.nav.travelGuides },
+  ];
+
+  const toggleLang = () => setLang(lang === "en" ? "tr" : "en");
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
@@ -36,11 +40,18 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+          >
+            <Globe className="h-4 w-4" />
+            {lang === "en" ? "TR" : "EN"}
+          </button>
           <Link
             to="/planner"
             className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors glow-box"
           >
-            Start Planning
+            {t.nav.startPlanning}
           </Link>
         </div>
 
@@ -65,12 +76,19 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Globe className="h-4 w-4" />
+            {lang === "en" ? "Türkçe" : "English"}
+          </button>
           <Link
             to="/planner"
             onClick={() => setOpen(false)}
             className="mt-2 block rounded-lg bg-primary px-4 py-2 text-center text-sm font-medium text-primary-foreground"
           >
-            Start Planning
+            {t.nav.startPlanning}
           </Link>
         </div>
       )}

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import type { Island } from "@/data/islands";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const IslandCard = ({ island }: { island: Island }) => {
+  const { t } = useLanguage();
   return (
     <Link
       to={`/destinations/${island.id}`}
@@ -20,7 +22,7 @@ const IslandCard = ({ island }: { island: Island }) => {
         <h3 className="font-display text-lg font-semibold text-card-foreground mb-1">{island.name}</h3>
         <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-2">{island.shortDescription}</p>
         <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
-          Explore Island <ArrowRight className="h-4 w-4" />
+          {t.destinations.exploreIsland} <ArrowRight className="h-4 w-4" />
         </span>
       </div>
     </Link>
