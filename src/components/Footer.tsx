@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import logoImg from "@/assets/karellio-logo.png";
 
 const Footer = () => {
   const [email, setEmail] = useState("");

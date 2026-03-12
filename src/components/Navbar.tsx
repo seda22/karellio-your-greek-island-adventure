@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Globe } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import logoImg from "@/assets/karellio-logo.png";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
