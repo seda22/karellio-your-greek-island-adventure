@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Compass } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/destinations", label: "Destinations" },
   { to: "/planner", label: "Trip Planner" },
-  { to: "/blog", label: "Blog" },
+  { to: "/blog", label: "Travel Guides" },
 ];
 
 const Navbar = () => {
@@ -14,10 +14,12 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold text-foreground">
-          <Compass className="h-6 w-6 text-primary" />
+        <Link to="/" className="flex items-center gap-2.5 font-display text-xl font-bold text-foreground">
+          <span className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold glow-box">
+            K
+          </span>
           Karellio
         </Link>
 
@@ -36,7 +38,7 @@ const Navbar = () => {
           ))}
           <Link
             to="/planner"
-            className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors glow-box"
           >
             Start Planning
           </Link>
@@ -50,7 +52,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-card border-b border-border px-4 pb-4">
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 px-4 pb-4">
           {navLinks.map((link) => (
             <Link
               key={link.to}
