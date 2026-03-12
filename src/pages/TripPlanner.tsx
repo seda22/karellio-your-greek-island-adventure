@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { islands } from "@/data/islands";
 import { Plus, Trash2, Calendar, MapPin } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface TripDay {
   label: string;
@@ -27,6 +28,7 @@ const defaultItinerary: Record<string, TripDay[]> = {
 const TripPlanner = () => {
   const [destinations, setDestinations] = useState<TripDestination[]>([]);
   const [selectedIsland, setSelectedIsland] = useState("");
+  const { t } = useLanguage();
 
   const addDestination = () => {
     if (!selectedIsland || destinations.find((d) => d.islandId === selectedIsland)) return;
@@ -47,7 +49,7 @@ const TripPlanner = () => {
     setDestinations(
       destinations.map((d) =>
         d.islandId === islandId
-          ? { ...d, days: [...d.days, { label: "Free day – explore at your own pace" }] }
+          ? { ...d, days: [...d.days, { label: t.planner.freeDay }] }
           : d
       )
     );
@@ -57,10 +59,8 @@ const TripPlanner = () => {
     <div>
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-3">Trip Planner</h1>
-          <p className="text-muted-foreground max-w-lg mx-auto">
-            Build your dream Greek island itinerary. Add destinations and customize each day.
-          </p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold mb-3">{t.planner.title}</h1>
+          <p className="text-muted-foreground max-w-lg mx-auto">{t.planner.subtitle}</p>
         </div>
       </section>
 
@@ -69,7 +69,7 @@ const TripPlanner = () => {
           {/* Add destination */}
           <div className="rounded-xl border border-border bg-card p-6 mb-10">
             <h2 className="font-display text-lg font-semibold mb-4 flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-primary" /> Add a Destination
+              <MapPin className="h-5 w-5 text-primary" /> {t.planner.addDestination}
             </h2>
             <div className="flex flex-col sm:flex-row gap-3">
               <select
@@ -77,7 +77,7 @@ const TripPlanner = () => {
                 onChange={(e) => setSelectedIsland(e.target.value)}
                 className="flex-1 rounded-lg border border-input bg-muted px-3 py-2.5 text-sm font-body text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               >
-                <option value="">Select an island...</option>
+                <option value="">{t.planner.selectIsland}</option>
                 {islands
                   .filter((i) => !destinations.find((d) => d.islandId === i.id))
                   .map((i) => (
@@ -89,7 +89,7 @@ const TripPlanner = () => {
                 disabled={!selectedIsland}
                 className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1"
               >
-                <Plus className="h-4 w-4" /> Add
+                <Plus className="h-4 w-4" /> {t.planner.add}
               </button>
             </div>
           </div>
@@ -98,8 +98,8 @@ const TripPlanner = () => {
           {destinations.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">
               <Calendar className="h-12 w-12 mx-auto mb-4 opacity-40" />
-              <p className="text-lg font-display">Your trip is empty</p>
-              <p className="text-sm mt-1">Add destinations above to start planning.</p>
+              <p className="text-lg font-display">{t.planner.emptyTitle}</p>
+              <p className="text-sm mt-1">{t.planner.emptyDesc}</p>
             </div>
           ) : (
             <div className="space-y-8">
@@ -121,7 +121,7 @@ const TripPlanner = () => {
                       </div>
                     </div>
                     <div className="p-6">
-                      <p className="text-sm text-muted-foreground mb-4">{dest.days.length} days planned</p>
+                      <p className="text-sm text-muted-foreground mb-4">{dest.days.length} {t.planner.daysPlanned}</p>
                       <div className="space-y-3">
                         {dest.days.map((day, idx) => (
                           <div key={idx} className="flex items-start gap-3">
@@ -129,7 +129,7 @@ const TripPlanner = () => {
                               {idx + 1}
                             </span>
                             <div className="pt-1">
-                              <p className="text-sm font-medium text-card-foreground">Day {idx + 1}</p>
+                              <p className="text-sm font-medium text-card-foreground">{t.planner.day} {idx + 1}</p>
                               <p className="text-sm text-muted-foreground">{day.label}</p>
                             </div>
                           </div>
@@ -139,7 +139,7 @@ const TripPlanner = () => {
                         onClick={() => addDay(dest.islandId)}
                         className="mt-4 text-sm text-primary font-medium hover:underline flex items-center gap-1"
                       >
-                        <Plus className="h-4 w-4" /> Add another day
+                        <Plus className="h-4 w-4" /> {t.planner.addDay}
                       </button>
                     </div>
                   </div>

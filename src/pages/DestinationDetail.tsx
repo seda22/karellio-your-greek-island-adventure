@@ -5,21 +5,29 @@ import {
   Star, UtensilsCrossed, Compass, Clock, ShieldCheck,
   Thermometer, Lightbulb, CalendarDays
 } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const DestinationDetail = () => {
   const { id } = useParams();
   const island = islands.find((i) => i.id === id);
+  const { t } = useLanguage();
 
   if (!island) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="text-center">
-          <h1 className="font-display text-2xl font-bold mb-2">Island not found</h1>
-          <Link to="/destinations" className="text-primary hover:underline">← Back to destinations</Link>
+          <h1 className="font-display text-2xl font-bold mb-2">{t.detail.islandNotFound}</h1>
+          <Link to="/destinations" className="text-primary hover:underline">{t.detail.backToDestinations}</Link>
         </div>
       </div>
     );
   }
+
+  const transportOptions = [
+    { icon: Plane, label: t.detail.flights, button: t.detail.findFlights },
+    { icon: Ship, label: t.detail.ferries, button: t.detail.bookFerry },
+    { icon: Car, label: t.detail.carRental, button: t.detail.rentACar },
+  ];
 
   return (
     <div>
@@ -30,11 +38,11 @@ const DestinationDetail = () => {
         <div className="absolute bottom-8 left-0 right-0 px-4">
           <div className="container mx-auto">
             <Link to="/destinations" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-3 transition-colors">
-              <ArrowLeft className="h-4 w-4" /> All Destinations
+              <ArrowLeft className="h-4 w-4" /> {t.detail.allDestinations}
             </Link>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground">{island.name}</h1>
             <div className="flex flex-wrap gap-4 mt-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1"><CalendarDays className="h-4 w-4 text-primary" /> Best: {island.bestTimeToVisit}</span>
+              <span className="flex items-center gap-1"><CalendarDays className="h-4 w-4 text-primary" /> {t.detail.best}: {island.bestTimeToVisit}</span>
               <span className="flex items-center gap-1"><Clock className="h-4 w-4 text-primary" /> {island.recommendedDuration}</span>
             </div>
           </div>
@@ -47,7 +55,7 @@ const DestinationDetail = () => {
         {/* Weather */}
         <section className="mb-12">
           <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-2">
-            <Thermometer className="h-5 w-5 text-primary" /> Weather Forecast
+            <Thermometer className="h-5 w-5 text-primary" /> {t.detail.weatherForecast}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             {island.weather.map((w) => (
@@ -61,24 +69,24 @@ const DestinationDetail = () => {
           </div>
         </section>
 
-        {/* Beaches & Things to Do */}
+        {/* Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          <InfoCard icon={Waves} title="Best Beaches" items={island.beaches} />
-          <InfoCard icon={MapPin} title="Things to Do" items={island.thingsToDo} />
-          <InfoCard icon={Compass} title="Local Attractions" items={island.localAttractions} />
-          <InfoCard icon={Lightbulb} title="Travel Tips" items={island.travelTips} />
+          <InfoCard icon={Waves} title={t.detail.bestBeaches} items={island.beaches} />
+          <InfoCard icon={MapPin} title={t.detail.thingsToDo} items={island.thingsToDo} />
+          <InfoCard icon={Compass} title={t.detail.localAttractions} items={island.localAttractions} />
+          <InfoCard icon={Lightbulb} title={t.detail.travelTips} items={island.travelTips} />
         </div>
 
         {/* Travel Requirements */}
         <section className="mb-12">
           <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-primary" /> Travel Requirements
+            <ShieldCheck className="h-5 w-5 text-primary" /> {t.detail.travelRequirements}
           </h2>
           <div className="rounded-xl bg-card border border-border p-6 space-y-3">
-            <p className="text-sm"><span className="font-medium text-foreground">Passport:</span> <span className="text-muted-foreground">{island.travelRequirements.passport}</span></p>
-            <p className="text-sm"><span className="font-medium text-foreground">Visa:</span> <span className="text-muted-foreground">{island.travelRequirements.visa}</span></p>
+            <p className="text-sm"><span className="font-medium text-foreground">{t.detail.passport}:</span> <span className="text-muted-foreground">{island.travelRequirements.passport}</span></p>
+            <p className="text-sm"><span className="font-medium text-foreground">{t.detail.visa}:</span> <span className="text-muted-foreground">{island.travelRequirements.visa}</span></p>
             <a href={island.travelRequirements.consulateLink} target="_blank" rel="noopener noreferrer" className="inline-flex text-sm text-primary hover:underline">
-              Official consulate information →
+              {t.detail.consulateLink}
             </a>
           </div>
         </section>
@@ -86,21 +94,17 @@ const DestinationDetail = () => {
         {/* Transportation */}
         <section className="mb-12">
           <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-2">
-            <Plane className="h-5 w-5 text-primary" /> Transportation
+            <Plane className="h-5 w-5 text-primary" /> {t.detail.transportation}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {[
-              { icon: Plane, label: "Flights", button: "Find Flights" },
-              { icon: Ship, label: "Ferries", button: "Book Ferry" },
-              { icon: Car, label: "Car Rental", button: "Rent a Car" },
-            ].map((t) => (
-              <div key={t.label} className="rounded-xl bg-card border border-border p-6 text-center">
+            {transportOptions.map((opt) => (
+              <div key={opt.label} className="rounded-xl bg-card border border-border p-6 text-center">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                  <t.icon className="h-6 w-6 text-primary" />
+                  <opt.icon className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="font-display font-semibold mb-3">{t.label}</h3>
+                <h3 className="font-display font-semibold mb-3">{opt.label}</h3>
                 <button className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors glow-box">
-                  {t.button}
+                  {opt.button}
                 </button>
               </div>
             ))}
@@ -110,7 +114,7 @@ const DestinationDetail = () => {
         {/* Hotels */}
         <section className="mb-12">
           <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-2">
-            <Hotel className="h-5 w-5 text-primary" /> Recommended Hotels
+            <Hotel className="h-5 w-5 text-primary" /> {t.detail.recommendedHotels}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {island.hotels.map((hotel) => (
@@ -123,7 +127,7 @@ const DestinationDetail = () => {
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">{hotel.description}</p>
                 <button className="w-full rounded-lg bg-primary/10 border border-primary/20 py-2 text-sm font-medium text-primary hover:bg-primary/20 transition-colors">
-                  Book Hotel
+                  {t.detail.bookHotel}
                 </button>
               </div>
             ))}
@@ -133,7 +137,7 @@ const DestinationDetail = () => {
         {/* Activities */}
         <section className="mb-12">
           <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-2">
-            <Compass className="h-5 w-5 text-primary" /> Activities & Tours
+            <Compass className="h-5 w-5 text-primary" /> {t.detail.activitiesTours}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {island.activities.map((activity) => (
@@ -142,7 +146,7 @@ const DestinationDetail = () => {
                 <h3 className="font-display font-semibold mb-1">{activity.name}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{activity.description}</p>
                 <button className="w-full rounded-lg bg-primary/10 border border-primary/20 py-2 text-sm font-medium text-primary hover:bg-primary/20 transition-colors">
-                  Book Activity
+                  {t.detail.bookActivity}
                 </button>
               </div>
             ))}
@@ -152,7 +156,7 @@ const DestinationDetail = () => {
         {/* Restaurants */}
         <section className="mb-12">
           <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-2">
-            <UtensilsCrossed className="h-5 w-5 text-primary" /> Restaurants
+            <UtensilsCrossed className="h-5 w-5 text-primary" /> {t.detail.restaurants}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {island.restaurants.map((r) => (
@@ -178,7 +182,7 @@ const DestinationDetail = () => {
             to="/planner"
             className="inline-flex rounded-xl bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors glow-box"
           >
-            Add to Trip Planner
+            {t.detail.addToPlanner}
           </Link>
         </div>
       </div>

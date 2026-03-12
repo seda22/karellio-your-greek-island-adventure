@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const { t } = useLanguage();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,37 +27,35 @@ const Footer = () => {
               </span>
               Karellio
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Your Global Life Partner. Discover destinations, plan trips, and book travel services with ease.
-            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">{t.footer.tagline}</p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-display font-semibold mb-4 text-foreground">Explore</h4>
+            <h4 className="font-display font-semibold mb-4 text-foreground">{t.footer.explore}</h4>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <Link to="/destinations" className="block hover:text-primary transition-colors">Destinations</Link>
-              <Link to="/planner" className="block hover:text-primary transition-colors">Trip Planner</Link>
-              <Link to="/blog" className="block hover:text-primary transition-colors">Travel Guides</Link>
+              <Link to="/destinations" className="block hover:text-primary transition-colors">{t.nav.destinations}</Link>
+              <Link to="/planner" className="block hover:text-primary transition-colors">{t.nav.tripPlanner}</Link>
+              <Link to="/blog" className="block hover:text-primary transition-colors">{t.nav.travelGuides}</Link>
             </div>
           </div>
 
           {/* Company */}
           <div>
-            <h4 className="font-display font-semibold mb-4 text-foreground">Company</h4>
+            <h4 className="font-display font-semibold mb-4 text-foreground">{t.footer.company}</h4>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <p className="cursor-pointer hover:text-primary transition-colors">About Karellio</p>
-              <p className="cursor-pointer hover:text-primary transition-colors">Contact Us</p>
-              <p className="cursor-pointer hover:text-primary transition-colors">Privacy Policy</p>
+              <p className="cursor-pointer hover:text-primary transition-colors">{t.footer.aboutKarellio}</p>
+              <p className="cursor-pointer hover:text-primary transition-colors">{t.footer.contactUs}</p>
+              <p className="cursor-pointer hover:text-primary transition-colors">{t.footer.privacyPolicy}</p>
             </div>
           </div>
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-display font-semibold mb-4 text-foreground">Newsletter</h4>
-            <p className="text-sm text-muted-foreground mb-3">Get travel tips and exclusive island guides.</p>
+            <h4 className="font-display font-semibold mb-4 text-foreground">{t.footer.newsletter}</h4>
+            <p className="text-sm text-muted-foreground mb-3">{t.footer.newsletterDesc}</p>
             {subscribed ? (
-              <p className="text-sm font-medium text-primary">✓ Thanks for subscribing!</p>
+              <p className="text-sm font-medium text-primary">{t.footer.thanksSubscribing}</p>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">
                 <input
@@ -69,7 +69,7 @@ const Footer = () => {
                   type="submit"
                   className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
-                  Join
+                  {t.footer.join}
                 </button>
               </form>
             )}
@@ -77,7 +77,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          © 2026 Karellio. All rights reserved.
+          {t.footer.copyright}
         </div>
       </div>
     </footer>
